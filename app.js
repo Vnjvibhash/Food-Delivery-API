@@ -3,10 +3,13 @@ import Fastify from 'fastify'
 import {connectDB} from "./src/config/connect.js";
 import { MONGO_URL, PORT } from './src/config/config.js';
 import { admin, buildAdminRouter } from "./src/config/setup.js";
+import { registerRoutes } from "./src/routes/index.js";
 
 const start = async () => {
     await connectDB(MONGO_URL);
     const app = Fastify();
+
+    await registerRoutes(app);
 
     await buildAdminRouter(app);
 

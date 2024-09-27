@@ -34,6 +34,9 @@ export const admin = new AdminJS({
             resource: Models.Branch,
         },
         {
+            resource: Models.Counter,
+        },
+        {
             resource: Models.Category,
             options: {
                 listProperties: ["name", "image"],
@@ -44,6 +47,13 @@ export const admin = new AdminJS({
             options: {
                 listProperties: ["name", "quantity", "price", "mrpPrice", "category", "image"],
                 filterProperties: ["quantity", "price", "category"],
+            },
+        },
+        {
+            resource: Models.Order,
+            options: {
+                listProperties: ["orderId", "customerId", "deliveryPartnerId", "branchId", "orderStatus", "totalAmount", "paymentMode", "paymentStatus"],
+                filterProperties: ["branchId", "orderStatus", "paymentMode", "paymentStatus"],
             },
         },
     ],
