@@ -88,6 +88,7 @@ export const confirmOrder = async (req, res) => {
             address: deliveryPersonLocation.address || "Not Provided"
         };
         await order.save();
+        req.server.io.to(orderId).emit("orderConfirmed", order);
         return res.status(200).send({ message: "Order confirmed successfully", order });
 
     } catch (error) {
@@ -127,8 +128,9 @@ export const updateOrderStatus = async (req, res) => {
             address: deliveryPersonLocation.address || "Not Provided"
         }
 
-        const updatedOrder = await order.save();
-        return res.status(200).send({ message: "Order updated successfully", updatedOrder });
+        await order.save();
+        req.server.io.to(orderId).emit("livetrackingUpdates", order);
+        return res.status(200).send({ message: "Order updated successfully", order });
     } catch (error) {
         return res.status(500).send({ message: "Faild to update order", error });
     }

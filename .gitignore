@@ -3,3 +3,4 @@ node_modules
 .adminjs
 seedData.js
 seedScript.js
+src/
