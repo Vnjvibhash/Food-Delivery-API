@@ -5,7 +5,6 @@ import * as Models from "../models/index.js";
 import { dark, light, noSidebar } from "@adminjs/themes";
 import { authenticate, COOKIE_PASSWORD, sessionStore } from "./config.js";
 
-
 AdminJS.registerAdapter(AdminJSMongoose);
 
 export const admin = new AdminJS({
@@ -20,8 +19,8 @@ export const admin = new AdminJS({
         {
             resource: Models.DeliveryPartner,
             options: {
-                listProperties: ["name", "email", "phone", "role", "isActivated"],
-                filterProperties: ["email", "role"],
+                listProperties: ["name", "email", "phone", "role", "isActivated", "branch"],
+                filterProperties: ["email", "branch"],
             },
         },
         {
@@ -36,11 +35,14 @@ export const admin = new AdminJS({
         },
         {
             resource: Models.Category,
+            options: {
+                listProperties: ["name", "image"],
+            },
         },
         {
             resource: Models.Product,
             options: {
-                listProperties: ["name", "quantity", "price", "offerPrice", "category"],
+                listProperties: ["name", "quantity", "price", "mrpPrice", "category", "image"],
                 filterProperties: ["quantity", "price", "category"],
             },
         },

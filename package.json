@@ -6,11 +6,12 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js"
   },
-  "type": "module",
-  "author": "",
+  "type":"module",
+  "author": "Vivek Kumar",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@adminjs/design-system": "^4.1.1",
     "@adminjs/fastify": "^4.1.3",
     "@adminjs/mongoose": "^4.1.0",
     "@adminjs/themes": "^1.0.1",
@@ -23,8 +24,5 @@
     "mongoose": "^8.6.4",
     "nodemon": "^3.1.7",
     "tslib": "^2.7.0"
-  },
-  "devDependencies": {
-    "@types/connect-mongodb-session": "^2.4.7"
   }
 }
