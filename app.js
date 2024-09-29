@@ -23,12 +23,12 @@ const start = async () => {
 
     await buildAdminRouter(app);
 
-    app.listen({ port: PORT || 3000, host: process.env.HOST || '0.0.0.0' }, (err, address) => {
+    app.listen({ port: PORT || 3000, host: '0.0.0.0' }, (err, address) => {
         if (err) {
             console.error(err);
             process.exit(1);
         }
-        console.log(`Server listening on process.env.HOST:${PORT || 3000}${admin.options.rootPath}`);
+        console.log(`Server listening on http://localhost:${PORT || 3000}${admin.options.rootPath}`);
     });
 
     app.ready().then(() => {

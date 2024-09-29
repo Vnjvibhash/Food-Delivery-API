@@ -1,6 +1,7 @@
 import { Customer, DeliveryPartner } from "../../models/users.js";
 import jwt from "jsonwebtoken";
 import 'dotenv/config';
+import bcrypt from "bcryptjs";
 
 const generateToken = (user) => {
     const accessToken = jwt.sign(
@@ -66,7 +67,7 @@ export const loginDeliveryPartner = async (req, res) => {
             return res.status(404).send({ message: "Delivery Partner not found" });
         }
 
-        const isMatch = password === deliveryPartner.password;
+        const isMatch = await bcrypt.compare(password, deliveryPartner.password);
         if (!isMatch) {
             return res.status(400).send({ message: "Invalid Password" });
         }

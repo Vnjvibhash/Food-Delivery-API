@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
 
 // Base User Schema
 const userSchema = new mongoose.Schema({
@@ -74,6 +75,20 @@ const deliveryPartnerSchema = new mongoose.Schema({
     }
 })
 
+// Pre-save hook to hash password before saving
+deliveryPartnerSchema.pre('save', async function (next) {
+    if (!this.isModified('password')) {
+        return next();
+    }
+    try {
+        const salt = await bcrypt.genSalt(10);
+        this.password = await bcrypt.hash(this.password, salt);
+        next();
+    } catch (err) {
+        next(err);
+    }
+});
+
 // Admin Schema
 const adminSchema = new mongoose.Schema({
     ...userSchema.obj,
@@ -96,6 +111,28 @@ const adminSchema = new mongoose.Schema({
         default: "Admin",
     }
 })
+
+// Pre-save hook to hash password for Admin schema
+adminSchema.pre('save', async function (next) {
+    if (!this.isModified('password')) {
+        return next();
+    }
+    try {
+        const salt = await bcrypt.genSalt(10);
+        this.password = await bcrypt.hash(this.password, salt);
+        next();
+    } catch (err) {
+        next(err);
+    }
+});
+
+deliveryPartnerSchema.methods.comparePassword = async function (enteredPassword) {
+    return await bcrypt.compare(enteredPassword, this.password);
+};
+
+adminSchema.methods.comparePassword = async function (enteredPassword) {
+    return await bcrypt.compare(enteredPassword, this.password);
+};
 
 export const Customer = mongoose.model("Customer", customerSchema);
 export const DeliveryPartner = mongoose.model("DeliveryPartner", deliveryPartnerSchema);

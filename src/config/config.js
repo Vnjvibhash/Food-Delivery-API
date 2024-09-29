@@ -1,4 +1,5 @@
 import "dotenv/config";
+import bcrypt from "bcryptjs";
 import fastifySession from "@fastify/session";
 import ConnectMongoDBSession from "connect-mongodb-session";
 import { Admin } from "../models/index.js";
@@ -20,7 +21,8 @@ export const authenticate = async (email, password) => {
         if (!admin) {
             return null;
         }
-        if (admin.password !== password) {
+        const isMatch = bcrypt.compare(password, admin.password);
+        if (!isMatch) {
             return null;
         }
         return Promise.resolve({email: admin.email, password: admin.password, role: admin.role, isActivated: admin.isActivated});
@@ -28,6 +30,7 @@ export const authenticate = async (email, password) => {
     return null;
 }
 
+export const HOST = process.env.HOST || "localhost";
 export const PORT = process.env.PORT || 3000;
 export const MONGO_URL = process.env.MONGO_URL;
 export const COOKIE_PASSWORD = process.env.COOKIE_PASSWORD;
