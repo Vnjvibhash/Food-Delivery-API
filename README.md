@@ -33,6 +33,9 @@ This is a comprehensive Food Delivery API designed to manage various aspects of 
 - `POST /order/:id/confirm` - Confirm the Order By Restorent (Admin only)
 - `PATCH /order/:id/status` - Update Status of the Order By Delivery partner (requires token)
 
+### RealTime Map Update
+- `ws://localhost:3000` - Create a WebSocket which will get created by Customer and Joined by Delivery Partner to have a Live Location update of the deliveryb partner once the Delivery Partner is Picked the Order items from the Restorent.
+
 ## Config
    ```bash
    git clone https://github.com/Vnjvibhash/Food-Delivery-API.git
